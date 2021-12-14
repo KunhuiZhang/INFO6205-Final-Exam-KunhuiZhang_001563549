@@ -12,9 +12,9 @@ public class Solution {
     public int connectedSquareSum(int graph_nodes, List<Integer> graph_from, List<Integer> graph_to){
         this.V = graph_nodes;
         edges = new HashMap<>();
-        id = new int[V+1];
+        id = new int[V];
         count = 0;
-        marked = new boolean[V+1];
+        marked = new boolean[V];
         for(int i=0;i<graph_from.size();i++){
             int v = graph_from.get(i);
             int w = graph_to.get(i);
@@ -22,14 +22,15 @@ public class Solution {
             if(!edge.contains(w)) edge.add(w);
             edges.put(v, edge);
         }
-        for(int i=1;i<=V;i++){
+        for(int i=0;i<V;i++){
             if(!marked[i]) dfs(i);
             count++;
         }
         int time = 0;
         int lastid = -1;
         int ans = 0;
-        for(int i = 1;i<=V;i++){
+        
+        for(int i = 0;i<V;i++){
             if(id[i]==lastid) time++;
             else{
                 ans+= time*time;
@@ -37,7 +38,8 @@ public class Solution {
                 time = 1;
             }
         }
-        return 0;
+        ans+= time*time;
+        return ans;
     }
     public void dfs(int v){
         marked[v] = true;
